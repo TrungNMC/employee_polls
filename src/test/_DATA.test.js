@@ -1,5 +1,4 @@
 import { _saveQuestion, _saveQuestionAnswer, _getUsers, _getQuestions } from '../utils/_DATA';
-import * as yourFunctions from '../utils/_DATA';
 
 
 test('_saveQuestion saves a question with correct data', async () => {

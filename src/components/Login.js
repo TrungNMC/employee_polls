@@ -18,9 +18,7 @@ function Login() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const users = useSelector((state) => Object.values(state.users));
-
-  console.log('users', users);
+  const users = useSelector((state) => state.users);
 
   const handleChangeUser = (event) => {
     setSelectUser(event.target.value);
@@ -56,12 +54,13 @@ function Login() {
             <InputLabel id='demo-simple-select-label'>User</InputLabel>
             <Select
               labelId='user-select-label'
-              id='user-select'
+              aria-label={'User'}
               value={selectUser}
               label='User'
               onChange={handleChangeUser}
+              inputProps={{ "data-testid": "select-id-user" }}
             >
-              {users.map((user) => (
+              {Object.values(users).map((user) => (
                 <MenuItem key={user.id} value={user.id}>
                   {user.name}
                 </MenuItem>
@@ -73,6 +72,7 @@ function Login() {
               variant='contained'
               sx={{ mt: 3, mb: 2 }}
               onClick={handleAuthorizeUser}
+              data-testid="submit-button"
             >
               Sign In
             </Button>

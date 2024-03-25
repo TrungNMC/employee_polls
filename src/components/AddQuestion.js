@@ -72,12 +72,12 @@ function AddQuestion() {
             <form onSubmit={handleSubmit}>
               <TextField
                 label='Option one'
-                data-testid='input-option-one'
                 value={optionOne}
                 onChange={(e) => setOptionOne(e.target.value)}
                 fullWidth
                 margin='normal'
                 required
+                inputProps={{ "data-testid": "input-option-one" }}
               />
               <Typography
                 variant='body2'
@@ -88,20 +88,21 @@ function AddQuestion() {
               </Typography>
               <TextField
                 label='Option two'
-                data-testid='input-option-two'
                 value={optionTwo}
                 onChange={(e) => setOptionTwo(e.target.value)}
                 fullWidth
                 margin='normal'
                 required
+                inputProps={{ "data-testid": "input-option-two" }}
               />
               <Button
                 variant='contained'
                 color='primary'
                 size='large'
                 type='submit'
-                //   disabled={optionOneText.trim() === '' || optionTwoText.trim() === ''}
                 fullWidth
+                data-testid="submit-button-ask"
+                disabled={!optionOne || !optionTwo}
               >
                 Ask Question
               </Button>
