@@ -1,5 +1,9 @@
-import { _saveQuestion, _saveQuestionAnswer, _getUsers, _getQuestions } from '../utils/_DATA';
-
+import {
+  _saveQuestion,
+  _saveQuestionAnswer,
+  _getUsers,
+  _getQuestions,
+} from '../utils/_DATA';
 
 test('_saveQuestion saves a question with correct data', async () => {
   const correctData = {
@@ -34,40 +38,18 @@ test('_saveQuestion returns an error when incorrect data is passed', async () =>
   }
 });
 
+test('async _saveQuestionAnswer updates data correctly', async () => {
+  const users = await _getUsers();
+  const questions = await _getQuestions();
+  const authedUser = 'sarahedo';
+  const qid = '8xf0y6ziyjabvozdd253nd';
+  const answer = 'optionOne';
 
+  const response = await _saveQuestionAnswer({ authedUser, qid, answer });
 
-// test('async _saveQuestionAnswer throws error for missing data', async () => {
-//     // Missing authedUser
-//     await expect(
-//       _saveQuestionAnswer({ qid: '8xf0y6ziyjabvozdd253nd', answer: 'optionTwo' })
-//     ).rejects.toThrow('Please provide authedUser, qid, and answer');
-  
-//     // Missing qid
-//     await expect(
-//       _saveQuestionAnswer({ authedUser: 'sarahedo', answer: 'optionTwo' })
-//     ).rejects.toThrow('Please provide authedUser, qid, and answer');
-  
-//     // Missing answer
-//     await expect(
-//       _saveQuestionAnswer({
-//         authedUser: 'sarahedo',
-//         qid: '8xf0y6ziyjabvozdd253nd',
-//       })
-//     ).rejects.toThrow('Please provide authedUser, qid, and answer');
-//   });
-  
-  test('async _saveQuestionAnswer updates data correctly', async () => {
-    const users = await _getUsers();
-    const questions = await _getQuestions();
-    const authedUser = 'sarahedo';
-    const qid = '8xf0y6ziyjabvozdd253nd';
-    const answer = 'optionOne';
-  
-    const response = await _saveQuestionAnswer({ authedUser, qid, answer });
-  
-    expect(response).toBe(true);
-  
-    // Additional assertions to check updated user and question data
-    expect(users[authedUser].answers[qid]).toBe(answer);
-    expect(questions[qid].optionOne.votes).toContain(authedUser);
-  });
+  expect(response).toBe(true);
+
+  // Additional assertions to check updated user and question data
+  expect(users[authedUser].answers[qid]).toBe(answer);
+  expect(questions[qid].optionOne.votes).toContain(authedUser);
+});

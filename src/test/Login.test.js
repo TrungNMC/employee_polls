@@ -98,13 +98,13 @@ test('should call handleAuthorizeUser on button click', () => {
 });
 
 test('should render login form and select user', () => {
-    const { getByLabelText, getByText } = render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Login />
-        </BrowserRouter>
-      </Provider>
-    );
-  
-    expect(getByLabelText('User')).toBeInTheDocument();
-  }); 
+  const { getByLabelText, getByText } = render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    </Provider>
+  );
+
+  expect(getByLabelText('User')).toBeInTheDocument();
+});

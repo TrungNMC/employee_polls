@@ -15,6 +15,17 @@ function App() {
   const dispatch = useDispatch();
   const questions = useSelector((state) => state.questions);
   const authedUser = useSelector((state) => state.authedUser);
+
+  function RequireAuth({ children }) {
+  
+    return authedUser === true ? (
+      children
+    ) : (
+      <Login />
+    );
+  }
+  
+
   useEffect(() => {
     dispatch(handleInitialData());
   }, [dispatch]);
@@ -26,9 +37,9 @@ function App() {
           <>
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/add' element={authedUser !== null ? <AddQuestion /> : <Login />} />
-            <Route path='/leaderboard' element={authedUser !== null ? <Leaderboard /> : <Login />} />
-            <Route path='/questions/:id' element={authedUser !== null ? <Question /> : <Login />} />
+            <Route path='/add' element={<RequireAuth><AddQuestion /></RequireAuth>} />
+            <Route path='/leaderboard' element={<RequireAuth><Leaderboard /></RequireAuth>} />
+            <Route path='/questions/:id' element={<RequireAuth><Question /></RequireAuth>} />
             <Route path='*' element={<NoMatch />} />
           </>
         )}

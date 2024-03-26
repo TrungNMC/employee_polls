@@ -22,25 +22,26 @@ function NavBar() {
   const navigate = useNavigate();
   const authedUser = useSelector((state) => state.authedUser);
   const users = useSelector((state) => state.users);
-  const pages = authedUser ? [
-    {
-      value: 'Home',
-      to: '/',
-      //   useExact: true
-    },
-    {
-      value: 'Leaderboard',
-      to: '/leaderboard',
-      //   useExact: true
-    },
-    {
-      value: 'Add Question',
-      to: '/add',
-      //   useExact: true
-    },
-  ] : []
+  const pages = authedUser
+    ? [
+        {
+          value: 'Home',
+          to: '/',
+          //   useExact: true
+        },
+        {
+          value: 'Leaderboard',
+          to: '/leaderboard',
+          //   useExact: true
+        },
+        {
+          value: 'Add Question',
+          to: '/add',
+          //   useExact: true
+        },
+      ]
+    : [];
 
-  const settings = ['Logout'];
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [accountDropdownOptions, setAccountDropdownOptions] = useState(null);
@@ -98,8 +99,8 @@ function NavBar() {
     //   }
     // };
 
-    if(authedUser) {
-      setAccountDropdownOptions(users[authedUser])
+    if (authedUser) {
+      setAccountDropdownOptions(users[authedUser]);
     }
 
     // const renderNavBarItems = () => {
@@ -191,7 +192,11 @@ function NavBar() {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Link key={page.value} to={page.to} style={{ textDecoration: 'none' }}>
+              <Link
+                key={page.value}
+                to={page.to}
+                style={{ textDecoration: 'none' }}
+              >
                 <Button
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
@@ -206,12 +211,18 @@ function NavBar() {
             <Tooltip title='Open settings'>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <ListItemButton>
-                    <ListItemAvatar>
-                      <Avatar alt='Profile Picture' src={accountDropdownOptions?.avatarURL} />
-                    </ListItemAvatar>
-                    <ListItemText sx={{color: '#fff'}} primary={accountDropdownOptions?.name} secondary={accountDropdownOptions?.id} />
-                  </ListItemButton>
-               
+                  <ListItemAvatar>
+                    <Avatar
+                      alt='Profile Picture'
+                      src={accountDropdownOptions?.avatarURL}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    sx={{ color: '#fff' }}
+                    primary={accountDropdownOptions?.name}
+                    secondary={accountDropdownOptions?.id}
+                  />
+                </ListItemButton>
               </IconButton>
             </Tooltip>
             <Menu
@@ -230,11 +241,15 @@ function NavBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleLogout}>
-                  <Typography textAlign='center'>{setting}</Typography>
+              {authedUser ? (
+                <MenuItem onClick={handleLogout}>
+                  <Typography textAlign='center'>Logout</Typography>
                 </MenuItem>
-              ))}
+              ) : (
+                <MenuItem onClick={handleLogout}>
+                  <Typography textAlign='center'>Login</Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>
